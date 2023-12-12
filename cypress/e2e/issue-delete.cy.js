@@ -5,7 +5,6 @@ describe('Issue deletion', () => {
       cy.url().should('eq', `${Cypress.env('baseUrl')}project`).then((url) => {
         cy.visit(url + '/board');
         cy.contains('This is an issue of type: Task.').click();
-    const getIssueDetailsModal = () => cy.get('[data-testid="modal:issue-details"]');
       });
     });
 
