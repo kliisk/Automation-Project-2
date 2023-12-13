@@ -1,10 +1,11 @@
 describe('Issue deletion', () => {
     const getIssueDetailsModal = () => cy.get('[data-testid="modal:issue-details"]');
+    let changeTask = 'This is an issue of type: Task.';
     beforeEach(() => {
       cy.visit('/');
       cy.url().should('eq', `${Cypress.env('baseUrl')}project`).then((url) => {
         cy.visit(url + '/board');
-        cy.contains('This is an issue of type: Task.').click();
+        cy.contains(changeTask).click();
       });
     });
 
@@ -21,7 +22,7 @@ describe('Issue deletion', () => {
         //Assert that modal window is closed and the issue is deleted and does not appear on the Kanban board
         cy.get('[data-testid="modal:confirm"]').should('not.exist');
         cy.get('[data-testid="board-list:backlog"]').should('be.visible').and('have.length', '1').within(() => {
-            cy.get('[data-testid="list-issue"]').contains('This is an issue of type: Task.').should('not.exist')
+            cy.get('[data-testid="list-issue"]').contains(changeTask).should('not.exist')
           });        
       });
 
@@ -39,7 +40,7 @@ describe('Issue deletion', () => {
         cy.reload();
         cy.contains('This is an issue of type: Task.').should('exist');
         cy.get('[data-testid="board-list:backlog"]').should('be.visible').and('have.length', '1').within(() => {
-            cy.get('[data-testid="list-issue"]').contains('This is an issue of type: Task.').should('exist')
+            cy.get('[data-testid="list-issue"]').contains(changeTask).should('exist')
           }); 
       });      
   });
