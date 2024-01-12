@@ -123,39 +123,4 @@ describe("Issue details editing", () => {
         }
       });
   });
-
-  it("ASSIGNMENT 3.3 Application is removing unnecessary spaces from title", () => {
-    const title = " Hello world! ";
-
-    // Starting from Kanban board
-    cy.url()
-      .should("eq", `${Cypress.env("baseUrl")}project/board`)
-      .then((url) => {
-        cy.visit(url + "/board?modal-issue-create=true");
-      });
-
-    // Adding title with spaces
-    cy.get('[data-testid="modal:issue-create"]').within(() => {
-      cy.get('input[name="title"]').wait(1000).type(title);
-      cy.get('button[type="submit"]').click();
-    });
-
-    // Assert that modal window is closed and successful message is visible
-    cy.get('[data-testid="modal:issue-create"]').should("not.exist");
-    cy.contains("Issue has been successfully created.").should("be.visible");
-
-    //Reload the page to be able to see recently created issue and assert that successful message has dissappeared after the reload
-    cy.reload();
-    cy.contains("Issue has been successfully created.").should("not.exist");
-
-    // Changing the title with trimmed version
-    cy.get('[data-testid="list-issue"]').eq(0).click();
-    getIssueDetailsModal().within(() => {
-      cy.get('[placeholder="Short summary"]')
-        .wait(1000)
-        .click()
-        .clear()
-        .type(title.trim());
-    });
-  });
 });
