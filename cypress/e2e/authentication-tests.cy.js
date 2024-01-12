@@ -17,3 +17,4 @@ describe('Authentication and verifying default setup', () => {
     cy.get('[data-testid="list-issue"]').should('have.length', 8);
   });
 });
+
