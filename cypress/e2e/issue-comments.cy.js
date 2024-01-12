@@ -1,3 +1,4 @@
+import { faker } from "@faker-js/faker";
 describe('Issue comments creating, editing and deleting', () => {
     beforeEach(() => {
         cy.visit('/');
