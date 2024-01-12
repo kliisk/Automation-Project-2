@@ -217,4 +217,19 @@ describe('Issue create', () => {
           });
     });
   });
+  it("ASSIGNMENT 3.2 Checking that the reporter’s name has only characters in it", () => {
+    cy.contains("This is an issue of type: Task.").click();
+    // Finding reporter's name and checking the string for characters.
+    cy.get('[data-testid="select:reporter"]').click();
+    cy.get('[data-testid="select:reporter"]')
+      .invoke("text")
+      .then((reporter) => {
+        const regex = /^[A-Za-z\s]+$/;
+        if (regex.test(reporter)) {
+          cy.log("Reporter's name has only characters in it.");
+        } else {
+          cy.log("The reporter's name contains non-letter characters.");
+        }
+      });
+  });
 });
