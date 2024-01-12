@@ -218,6 +218,8 @@ describe('Issue create', () => {
     });
   });
   it("ASSIGNMENT 3.3 Application is removing unnecessary spaces from title", () => {
+    const getIssueDetailsModal = () =>
+      cy.get('[data-testid="modal:issue-details"]');
     const title = " Hello world! ";
 
     // Adding title with spaces
