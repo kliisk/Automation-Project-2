@@ -217,19 +217,31 @@ describe('Issue create', () => {
           });
     });
   });
-  it("ASSIGNMENT 3.2 Checking that the reporter’s name has only characters in it", () => {
-    cy.contains("This is an issue of type: Task.").click();
-    // Finding reporter's name and checking the string for characters.
-    cy.get('[data-testid="select:reporter"]').click();
-    cy.get('[data-testid="select:reporter"]')
-      .invoke("text")
-      .then((reporter) => {
-        const regex = /^[A-Za-z\s]+$/;
-        if (regex.test(reporter)) {
-          cy.log("Reporter's name has only characters in it.");
-        } else {
-          cy.log("The reporter's name contains non-letter characters.");
-        }
-      });
+  it("ASSIGNMENT 3.3 Application is removing unnecessary spaces from title", () => {
+    const title = " Hello world! ";
+
+    // Adding title with spaces
+    cy.get('[data-testid="modal:issue-create"]').within(() => {
+      cy.get('input[name="title"]').wait(1000).type(title);
+      cy.get('button[type="submit"]').click();
+    });
+
+    // Assert that modal window is closed and successful message is visible
+    cy.get('[data-testid="modal:issue-create"]').should("not.exist");
+    cy.contains("Issue has been successfully created.").should("be.visible");
+
+    //Reload the page to be able to see recently created issue and assert that successful message has dissappeared after the reload
+    cy.reload();
+    cy.contains("Issue has been successfully created.").should("not.exist");
+
+    // Changing the title with trimmed version
+    cy.get('[data-testid="list-issue"]').eq(0).click();
+    getIssueDetailsModal().within(() => {
+      cy.get('[placeholder="Short summary"]')
+        .wait(1000)
+        .click()
+        .clear()
+        .type(title.trim());
+    });
   });
 });
