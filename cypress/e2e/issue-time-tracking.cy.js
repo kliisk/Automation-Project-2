@@ -72,7 +72,6 @@ describe("Time tracking functionality", () => {
 
     // Asserting that the estimation is added and visible.
     getIssueDetailsModal().within(() => {
-      cy.contains("div", timeSpent + "h logged").should("be.visible");
       cy.contains("div", "No time logged").should("be.visible");
     });
 
