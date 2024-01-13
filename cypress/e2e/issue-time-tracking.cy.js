@@ -42,6 +42,30 @@ describe("Time tracking functionality", () => {
   let timeSpent = 5;
   let timeLeft = 9;
 
+  it("Adding time estimation", () => {
+    // Adding estimation
+    const firstEstimation = 10;
+    const updatedEstimation = 20;
+
+    getIssueDetailsModal().within(() => {
+      cy.get('[placeholder="Number"]').click().clear().type(firstEstimation);
+      cy.contains("div", firstEstimation + "h estimated").should("be.visible");
+    });
+
+    // Editing estimation
+    getIssueDetailsModal().within(() => {
+      cy.get('[placeholder="Number"]').click().clear().type(updatedEstimation);
+      cy.contains(updatedEstimation + "h estimated").should("be.visible");
+    });
+
+    // Deleting estimation
+    getIssueDetailsModal().within(() => {
+      cy.get('[placeholder="Number"]').click().clear();
+      cy.contains("h estimated").should("not.exist");
+      cy.get('[data-testid="icon:close"]').eq(1).click();
+    });
+  });
+  
   it("Time tracking", () => {
     // Adding estimation
     stopWatch();
